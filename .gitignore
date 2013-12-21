@@ -3,6 +3,12 @@
 # C extensions
 *.so
 
+# Config
+config.py
+
+# Databases
+*.db
+
 # Packages
 *.egg
 *.egg-info
