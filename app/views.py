@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template
+from forms import SearchForm
 
 
 @app.route('/')
@@ -8,15 +9,19 @@ def index():
     trades = [
         {
             'id': '045',
-            'species': 'Vileplume'
+            'species': 'Vileplume',
+            'owner': 'coolguy2000'
         },
         {
             'id': '185',
-            'species': 'Sudowoodo'
+            'species': 'Sudowoodo',
+            'owner': 'sebkisadum'
         },
         {
             'id': '417',
-            'species': 'Pachirisu'
+            'species': 'Pachirisu',
+            'owner': 'eddsmells'
         }
     ]
-    return render_template("index.html", trades=trades)
+    form = SearchForm()
+    return render_template("index.html", trades=trades, form=form)
