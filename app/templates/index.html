@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-	<h3>Newest trades</h3>
 	{% for trade in trades %}
 	<div class="row">
 		{% include 'mon_detail.html' %}
