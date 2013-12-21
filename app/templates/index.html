@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="container">
-	{% for trade in trades %}
-	<div class="row">
-		{% include 'mon_detail.html' %}
+<form action="search" method="post" name="search" class="col-md-8 col-md-offset-2">
+	<div class="input-group input-group-lg form-group">
+		{{form.search(class_="form-control")}}
+		<span class="input-group-btn">
+	    	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+	    </span>
 	</div>
-	{% endfor %}
+	{{form.hidden_tag()}}
+</form>
+<!-- 	{% for trade in trades %}
+<div class="row">
+	{% include 'mon_detail.html' %}
 </div>
+<hr>
+{% endfor %} -->
 {% endblock %}
