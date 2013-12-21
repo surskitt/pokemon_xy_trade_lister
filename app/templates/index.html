@@ -11,9 +11,19 @@
 		{{form.hidden_tag()}}
 	</form>
 </div>
-	{% for trade in trades|slice(3) %}
-	{% include 'mon_detail.html' %}
+<div class="hidden-xs" style="padding-bottom: 40px"></div>
+<div class="row col-md-offset-4">
+	{% for trade in trades %}
+	<div class="col-md-2 col-xs-4">
+		<p class="text-center"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format(trade.id)) }}" alt="{{ trade.species}}"></p>
+	</div>
 	{% endfor %}
-<hr>
-{% endfor %}
+</div>
+<div class="row col-md-offset-4">
+	{% for trade in trades %}
+	<div class="col-md-2 col-xs-4">
+		<p class="text-center"><small>{{trade.owner}}'s {{trade.species}}</small></p>
+	</div>
+	{% endfor %}
+</div>
 {% endblock %}
