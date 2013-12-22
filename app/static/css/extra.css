@@ -27,3 +27,9 @@ body { padding-top: 5px; }
 	margin-bottom: 4px;
 	border-radius: 4px;
 }
+
+.modal-vertical-centered {
+	transform: translate(0, 50%) !important;
+	-ms-transform: translate(0, 50%) !important; /* IE 9 */
+	-webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
+}
