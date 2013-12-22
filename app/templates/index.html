@@ -12,18 +12,23 @@
 	</form>
 </div>
 <div class="hidden-xs" style="padding-bottom: 40px"></div>
-<div class="row col-md-offset-4">
-	{% for trade in trades %}
-	<div class="col-md-2 col-xs-4">
-		<p class="text-center"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format(trade.id)) }}" alt="{{ trade.species}}"></p>
+<div class="visible-xs" style="padding-bottom: 20px"></div>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		{% for trade in trades %}
+		<div class="col-md-4 col-xs-4">
+			<p class="text-center"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format(trade.id)) }}" alt="{{ trade.species}}"></p>
+		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
 </div>
-<div class="row col-md-offset-4">
-	{% for trade in trades %}
-	<div class="col-md-2 col-xs-4">
-		<p class="text-center"><small>{{trade.owner}}'s {{trade.species}}</small></p>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		{% for trade in trades %}
+		<div class="col-md-4 col-xs-4">
+			<p class="text-center"><small>{{trade.owner}}'s {{trade.species}}</small></p>
+		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
 </div>
 {% endblock %}
