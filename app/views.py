@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, request
+from flask import render_template, request
 from forms import SearchForm, LoginForm
 
 
@@ -35,5 +35,6 @@ def index(loginSuccess=True):
         trades=trades,
         sForm=sForm,
         lForm=lForm,
-        loginSuccess=loginSuccess
+        loginSuccess=loginSuccess,
+        providers=app.config['OPENID_PROVIDERS']
     )

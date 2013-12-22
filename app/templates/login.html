@@ -8,6 +8,13 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
+			|{% for pr in providers %}
+			<a href="javascript:set_openid('{{pr.url}}', '{{pr.name}}');">{{pr.name}}</a> |
+			{% endfor %}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
 			<div class="checkbox">
 				<label>
 					{{lForm.remember_me}} Remember me

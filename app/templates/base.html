@@ -69,9 +69,10 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<!-- Bootstrap javascript -->
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/extra.js') }}"></script>
 
 	{% if not loginSuccess %}
-		<script>
+		<script type="text/javascript">
 			$('#loginModal').modal('show');
 			$('#inputOpenIdGroup').addClass('has-error');
 			$('#inputOpenID').removeAttr('placeholder');
