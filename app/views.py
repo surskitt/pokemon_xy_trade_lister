@@ -1,11 +1,11 @@
 from app import app
-from flask import render_template
+from flask import render_template, redirect, request
 from forms import SearchForm, LoginForm
 
 
-@app.route('/')
-@app.route('/index')
-def index():
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+def index(loginSuccess=True):
     trades = [
         {
             'id': '045',
@@ -25,6 +25,15 @@ def index():
     ]
     sForm = SearchForm()
     lForm = LoginForm()
+
+    # If the page was reached by a post request from the login form
+    if request.method == 'POST' and not sForm.validate_on_submit():
+        loginSuccess = lForm.validate_on_submit()
+
     return render_template(
-        "index.html", trades=trades, sForm=sForm, lForm=lForm
+        "index.html",
+        trades=trades,
+        sForm=sForm,
+        lForm=lForm,
+        loginSuccess=loginSuccess
     )
