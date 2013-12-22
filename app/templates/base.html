@@ -71,6 +71,11 @@
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
 	{% if not loginSuccess %}
-		<script>$('#loginModal').modal('show')</script>
+		<script>
+			$('#loginModal').modal('show');
+			$('#inputOpenIdGroup').addClass('has-error');
+			$('#inputOpenID').removeAttr('placeholder');
+			$('#inputOpenID').attr("placeholder", "Invalid OpenID, please try again.")
+		</script>
 	{% endif %}
 </body>
