@@ -1,0 +1,15 @@
+CSRF_ENABLED = True
+SECRET_KEY = 'CHANGEME'
+
+OPENID_PROVIDERS = [
+    {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
+    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
+    {'name': 'AOL', 'url': 'http://openid.aol.com/<username>'},
+    {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
+    {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'},
+    {'name': 'Wordpress', 'url': 'https://<username>.wordpress.com'},
+    {'name': 'Blogspot', 'url': 'https://www.blogspot.com'},
+    {'name': 'LiveJournal', 'url': 'http://<username>.livejournal.com'},
+    {'name': 'StackExchange', 'url': 'https://openid.stackexchange.com'},
+    {'name': 'Technorati', 'url': 'https://technorati.com/people/technorati/<username>'}
+]
