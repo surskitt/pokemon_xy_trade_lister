@@ -30,7 +30,8 @@
 				<ul class="nav navbar-nav">
 					<li><a href="#">Profile</a></li>
 					<li><a href="#">Log out</a></li>
-					<li><a href="#">Log in</a></li>
+					<li><a href="#loginModal" data-toggle="modal">Log in</a></li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Source</a></li>
@@ -48,7 +49,21 @@
 		</div>
 
 		{% block body %}{% endblock %}
-	</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="loginModalLabel">Log in</h4>
+					</div>
+					<div class="modal-body">
+						{% include 'login.html' %}
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery.js"></script>

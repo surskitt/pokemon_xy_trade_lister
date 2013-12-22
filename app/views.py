@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template
-from forms import SearchForm
+from forms import SearchForm, LoginForm
 
 
 @app.route('/')
@@ -23,5 +23,8 @@ def index():
             'owner': 'eddsmells'
         }
     ]
-    form = SearchForm()
-    return render_template("index.html", trades=trades, form=form)
+    sForm = SearchForm()
+    lForm = LoginForm()
+    return render_template(
+        "index.html", trades=trades, sForm=sForm, lForm=lForm
+    )
