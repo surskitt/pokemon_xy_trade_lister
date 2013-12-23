@@ -11,6 +11,18 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default=ROLE_USER)
     trades = db.relationship('Trade', backref='owner', lazy='dynamic')
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
+
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 

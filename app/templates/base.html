@@ -28,9 +28,12 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Profile</a></li>
-					<li><a href="#">Log out</a></li>
+					{% if g.user.is_authenticated() %}
+					<li><a href="{{ url_for('user', nickname = g.user.nickname) }}">Profile</a></li>
+					<li><a href="{{ url_for('logout') }}">Log out</a></li>
+					{% else %}
 					<li><a href="#loginModal" data-toggle="modal">Log in</a></li>
+					{% endif %}
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
