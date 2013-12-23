@@ -10,7 +10,7 @@ config.py
 *.db
 
 # tmp directory
-tmp
+tmp/*
 
 # Packages
 *.egg
