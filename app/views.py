@@ -87,7 +87,7 @@ def logout():
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    eForm = EditForm()
+    eForm = EditForm(g.user.nickname)
     lForm = LoginForm()
     if eForm.validate_on_submit():
         g.user.nickname = eForm.nickname.data
@@ -101,8 +101,28 @@ def edit():
         eForm.about_me.data = g.user.about_me
     return render_template('edit_profile.html',
                            lForm=lForm,
+                           providers=app.config['OPENID_PROVIDERS'],
                            eForm=eForm,
                            loginSuccess=True)
+
+
+@app.errorhandler(404)
+def internal_error(error):
+    lForm = LoginForm()
+    return render_template('404.html',
+                        lForm=lForm,
+                        providers=app.config['OPENID_PROVIDERS'],
+                        loginSuccess=True), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    lForm = LoginForm()
+    return render_template('500.html',
+                           lForm=lForm,
+                           providers=app.config['OPENID_PROVIDERS'],
+                           loginSuccess=True), 500
 
 
 @oid.after_login
@@ -114,7 +134,8 @@ def after_login(resp):
         nickname = resp.nickname
         if nickname is None or nickname == "":
             nickname = resp.email.split('@')[0]
-        user = User(nickname=nickname, email=resp.email, role=ROLE_USER)
+        nickname = User.make_unique_nickname(nickname)
+        user = User(nickname = nickname, email = resp.email, role = ROLE_USER)
         db.session.add(user)
         db.session.commit()
     remember_me = False

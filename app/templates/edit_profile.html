@@ -6,10 +6,13 @@
 <form action="" method="post" name="edit">
     {{eForm.hidden_tag()}}
     <table>
-        <tr>
-            <td>Your nickname:</td>
-            <td>{{eForm.nickname(size = 24)}}</td>
-        </tr>
+        <td>Your nickname:</td>
+        <td>
+            {{eForm.nickname(size = 24)}}
+            {% for error in eForm.errors.nickname %}
+            <br><span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </td>
         <tr>
             <td>About yourself:</td>
             <td>{{eForm.about_me(cols = 32, rows = 4)}}</td>
