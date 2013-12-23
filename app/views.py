@@ -1,7 +1,7 @@
 from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from forms import SearchForm, LoginForm, EditForm
+from forms import SearchForm, LoginForm, EditUserForm
 from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 
@@ -81,13 +81,13 @@ def user(nickname):
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(oid.get_next_url())
 
 
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    eForm = EditForm(g.user.nickname)
+    eForm = EditUserForm(g.user.nickname)
     lForm = LoginForm()
     if eForm.validate_on_submit():
         g.user.nickname = eForm.nickname.data

@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block body %}
+<div class="jumbotron text-center">
+	<img src="{{ url_for('static', filename='img/karrablast_shelmet.png') }}">
+	<h1>Goon trade lister</h1>
+	<div class="lead">
+		List the stats, moves and abilities of your available trades.
+	</div>
+</div>
 <div class="row">
 	<form action="search" method="post" name="search" class="col-md-8 col-md-offset-2">
 		<div class="input-group input-group-lg form-group">
