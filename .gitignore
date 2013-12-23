@@ -9,6 +9,9 @@ config.py
 # Databases
 *.db
 
+# tmp directory
+tmp
+
 # Packages
 *.egg
 *.egg-info
