@@ -41,3 +41,4 @@ NameError: global name 'User' is not defined
 2013-12-23 14:02:11,599 INFO: microblog startup [in C:\Users\Shane\Documents\Coding\python\flask\trade_lister\app\__init__.py:33]
 2013-12-23 14:03:08,125 INFO: microblog startup [in C:\Users\Shane\Documents\Coding\python\flask\trade_lister\app\__init__.py:33]
 2013-12-23 14:03:15,864 INFO: microblog startup [in C:\Users\Shane\Documents\Coding\python\flask\trade_lister\app\__init__.py:33]
+2013-12-23 14:06:02,309 INFO: microblog startup [in C:\Users\Shane\Documents\Coding\python\flask\trade_lister\app\__init__.py:33]
