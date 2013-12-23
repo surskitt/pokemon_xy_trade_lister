@@ -1,13 +1,18 @@
 from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from forms import SearchForm, LoginForm
+from forms import SearchForm, LoginForm, EditForm
 from models import User, ROLE_USER, ROLE_ADMIN
+from datetime import datetime
 
 
 @app.before_request
 def before_request():
     g.user = current_user
+    if g.user.is_authenticated():
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -54,10 +59,50 @@ def index(loginSuccess=True):
     )
 
 
+@app.route('/user/<nickname>')
+def user(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    if user is None:
+        flash('User ' + nickname + ' not found.')
+        return redirect(url_for('index'))
+    trades = [
+        {'owner': user, 'species': 'Bulbasaur'},
+        {'owner': user, 'species': 'Surskit'}
+    ]
+    lForm = LoginForm()
+    return render_template('user.html',
+                           user=user,
+                           trades=trades,
+                           lForm=lForm,
+                           providers=app.config['OPENID_PROVIDERS'],
+                           loginSuccess=True)
+
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    eForm = EditForm()
+    lForm = LoginForm()
+    if eForm.validate_on_submit():
+        g.user.nickname = eForm.nickname.data
+        g.user.about_me = eForm.about_me.data
+        db.session.add(g.user)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit'))
+    else:
+        eForm.nickname.data = g.user.nickname
+        eForm.about_me.data = g.user.about_me
+    return render_template('edit_profile.html',
+                           lForm=lForm,
+                           eForm=eForm,
+                           loginSuccess=True)
 
 
 @oid.after_login
