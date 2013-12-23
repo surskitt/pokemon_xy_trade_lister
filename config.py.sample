@@ -1,3 +1,5 @@
+import os
+
 CSRF_ENABLED = True
 SECRET_KEY = 'CHANGEME'
 
@@ -13,3 +15,8 @@ OPENID_PROVIDERS = [
     {'name': 'StackExchange', 'url': 'https://openid.stackexchange.com'},
     {'name': 'Technorati', 'url': 'https://technorati.com/people/technorati/<username>'}
 ]
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
