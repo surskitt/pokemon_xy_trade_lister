@@ -116,8 +116,8 @@ def edit():
 def internal_error(error):
     lForm = LoginForm()
     return render_template('404.html',
-                        lForm=lForm,
-                        providers=app.config['OPENID_PROVIDERS']), 404
+                           lForm=lForm,
+                           providers=app.config['OPENID_PROVIDERS']), 404
 
 
 @app.errorhandler(500)
@@ -139,7 +139,7 @@ def after_login(resp):
         if nickname is None or nickname == "":
             nickname = resp.email.split('@')[0]
         nickname = User.make_unique_nickname(nickname)
-        user = User(nickname = nickname, email = resp.email, role = ROLE_USER)
+        user = User(nickname=nickname, email=resp.email, role=ROLE_USER)
         db.session.add(user)
         db.session.commit()
     remember_me = False
@@ -148,6 +148,34 @@ def after_login(resp):
         session.pop('remember_me', None)
     login_user(user, remember=remember_me)
     return redirect(request.args.get('next') or url_for('index'))
+
+
+@app.route('/new_trade', methods=['GET', 'POST'])
+def new_trade():
+    ntForm = NewTradeForm()
+    if ntForm.validate_on_submit():
+        trade = Trade(
+            owner=g.user,
+            dex_no=ntForm.species.data.split(',')[0],
+            species=ntForm.species.data.split(',')[1],
+            count=ntForm.count.data,
+            nature=ntForm.nature.data,
+            ability=ntForm.ability.data,
+            iv_hp=ntForm.iv_hp.data,
+            iv_atk=ntForm.iv_atk.data,
+            iv_def=ntForm.iv_def.data,
+            iv_spa=ntForm.iv_spa.data,
+            iv_spd=ntForm.iv_spd.data,
+            iv_spe=ntForm.iv_spe.data,
+            move1=ntForm.moves.data[0] if 0 == len(l) else None,
+            move2=ntForm.moves.data[1] if 1 == len(l) else None,
+            move3=ntForm.moves.data[2] if 2 == len(l) else None,
+            move4=ntForm.moves.data[3] if 3 == len(l) else None
+        )
+        db.session.add(trade)
+        db.session.commit()
+    return redirect(request.args.get('next') or url_for('index'))
+
 
 
 @lm.user_loader
