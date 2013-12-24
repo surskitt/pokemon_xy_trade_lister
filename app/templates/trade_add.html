@@ -2,7 +2,7 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-select.css') }}">
 <div class="container">
-	<form action="" method="post" name="addtrade" role="form" action="{{ url_for('new_trade') }}">
+	<form method="post" name="new_trade" role="form" action="/new_trade">
 		{{taForm.hidden_tag()}}
 		<div class="row">
 			<div class="form-group col-md-8">

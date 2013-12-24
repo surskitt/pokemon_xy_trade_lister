@@ -2,7 +2,7 @@ from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
-from models import User, ROLE_USER, ROLE_ADMIN
+from models import User, ROLE_USER, ROLE_ADMIN, Trade
 from datetime import datetime
 
 
@@ -19,24 +19,8 @@ def before_request():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     user = g.user
-
-    trades = [
-        {
-            'id': '045',
-            'species': 'Vileplume',
-            'owner': 'coolguy2000'
-        },
-        {
-            'id': '185',
-            'species': 'Sudowoodo',
-            'owner': 'sebkisadum'
-        },
-        {
-            'id': '417',
-            'species': 'Pachirisu',
-            'owner': 'eddsmells'
-        }
-    ]
+    
+    trades = Trade.query.all()[:3]
     sForm = SearchForm()
     lForm = LoginForm()
 
@@ -77,7 +61,6 @@ def login():
 
     # If the page was reached by a post request from the login form
     # if request.method == 'POST' and not sForm.validate_on_submit():
-    loginSuccess = lForm.validate_on_submit()
     if lForm.validate_on_submit():
         session['remember_me'] = lForm.remember_me.data
         return oid.try_login(lForm.openid.data, ask_for=['nickname', 'email'])
@@ -152,6 +135,12 @@ def after_login(resp):
 
 @app.route('/new_trade', methods=['GET', 'POST'])
 def new_trade():
+    def index_or_none(l, i):
+        if len(l) >= i + 1:
+            return l[i] 
+        else:
+            return None
+
     ntForm = NewTradeForm()
     if ntForm.validate_on_submit():
         trade = Trade(
@@ -167,10 +156,10 @@ def new_trade():
             iv_spa=ntForm.iv_spa.data,
             iv_spd=ntForm.iv_spd.data,
             iv_spe=ntForm.iv_spe.data,
-            move1=ntForm.moves.data[0] if 0 == len(l) else None,
-            move2=ntForm.moves.data[1] if 1 == len(l) else None,
-            move3=ntForm.moves.data[2] if 2 == len(l) else None,
-            move4=ntForm.moves.data[3] if 3 == len(l) else None
+            move1=index_or_none(ntForm.moves.data,0),
+            move2=index_or_none(ntForm.moves.data,1),
+            move3=index_or_none(ntForm.moves.data,2),
+            move4=index_or_none(ntForm.moves.data,3)
         )
         db.session.add(trade)
         db.session.commit()
