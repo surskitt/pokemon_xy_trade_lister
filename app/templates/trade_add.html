@@ -8,7 +8,7 @@
 			<div class="form-group col-md-8">
 				<div class="col-md-4">
 					<label for="inputSpecies">Species</label>
-					{{ taForm.species(class_="selectpicker", id="inputSpecies", **{'data-live-search': 'true', 'data-size': '5'}) }}
+					{{ taForm.species(class_="selectpicker", id="inputSpecies", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
 				<div class="col-md-2">
 					<label for="inputCount">Count</label>
@@ -20,11 +20,11 @@
 			<div class="form-group col-md-8">
 				<div class="col-md-4">
 					<label for="inputNature">Nature</label>
-						{{ taForm.nature(class_="selectpicker", id="inputNature", **{'data-live-search': 'true'}) }}
+						{{ taForm.nature(class_="selectpicker", id="inputNature", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
 				<div class="col-md-4">
 					<label for="inputAbility">Ability</label>
-					{{ taForm.ability(class_="selectpicker", id="inputAbility", **{'data-live-search': 'true'}) }}
+					{{ taForm.ability(class_="selectpicker", id="inputAbility", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 			<div class="form-group col-md-8">
 				<div class="col-md-8">
 					<label for="inputMoves">Moves</label>
-					{{ taForm.moves(class_="selectpicker", id="inputMoves", **{'data-live-search': 'true', 'data-width': '100%'}) }}
+					{{ taForm.moves(class_="selectpicker", id="inputMoves", **{'data-live-search': 'true', 'data-width': '100%', 'data-size': '10'}) }}
 				</div>
 			</div>
 		</div>
