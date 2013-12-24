@@ -17,8 +17,7 @@ def before_request():
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-@oid.loginhandler
-def index(loginSuccess=True):
+def index():
     user = g.user
 
     trades = [
@@ -41,25 +40,17 @@ def index(loginSuccess=True):
     sForm = SearchForm()
     lForm = LoginForm()
 
-    # If the page was reached by a post request from the login form
-    if request.method == 'POST' and not sForm.validate_on_submit():
-        loginSuccess = lForm.validate_on_submit()
-        if lForm.validate_on_submit():
-            session['remember_me'] = lForm.remember_me.data
-            return oid.try_login(lForm.openid.data, ask_for=['nickname', 'email'])
-
     return render_template(
         "index.html",
         user=user,
         trades=trades,
         sForm=sForm,
-        lForm=lForm,
-        loginSuccess=loginSuccess,
+        lForm=LoginForm(),
         providers=app.config['OPENID_PROVIDERS']
     )
 
 
-@app.route('/user/<nickname>')
+@app.route('/user/<nickname>', methods=['GET', 'POST'])
 def user(nickname):
     user = User.query.filter_by(nickname=nickname).first()
     if user is None:
@@ -76,8 +67,22 @@ def user(nickname):
                            trades=trades,
                            lForm=lForm,
                            taForm=taForm,
-                           providers=app.config['OPENID_PROVIDERS'],
-                           loginSuccess=True)
+                           providers=app.config['OPENID_PROVIDERS'])
+
+
+@app.route('/login', methods=['GET', 'POST'])
+@oid.loginhandler
+def login():
+    lForm = LoginForm()
+
+    # If the page was reached by a post request from the login form
+    # if request.method == 'POST' and not sForm.validate_on_submit():
+    loginSuccess = lForm.validate_on_submit()
+    if lForm.validate_on_submit():
+        session['remember_me'] = lForm.remember_me.data
+        return oid.try_login(lForm.openid.data, ask_for=['nickname', 'email'])
+
+    return redirect(oid.get_next_url())
 
 
 @app.route('/logout')
@@ -86,7 +91,7 @@ def logout():
     return redirect(oid.get_next_url())
 
 
-@app.route('/edit', methods=['GET', 'POST'])
+@app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def edit():
     eForm = EditUserForm(g.user.nickname)
@@ -104,8 +109,7 @@ def edit():
     return render_template('edit_profile.html',
                            lForm=lForm,
                            providers=app.config['OPENID_PROVIDERS'],
-                           eForm=eForm,
-                           loginSuccess=True)
+                           eForm=eForm)
 
 
 @app.errorhandler(404)
@@ -113,8 +117,7 @@ def internal_error(error):
     lForm = LoginForm()
     return render_template('404.html',
                         lForm=lForm,
-                        providers=app.config['OPENID_PROVIDERS'],
-                        loginSuccess=True), 404
+                        providers=app.config['OPENID_PROVIDERS']), 404
 
 
 @app.errorhandler(500)
@@ -123,8 +126,7 @@ def internal_error(error):
     lForm = LoginForm()
     return render_template('500.html',
                            lForm=lForm,
-                           providers=app.config['OPENID_PROVIDERS'],
-                           loginSuccess=True), 500
+                           providers=app.config['OPENID_PROVIDERS']), 500
 
 
 @oid.after_login
