@@ -15,8 +15,8 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/')
+@app.route('/index')
 def index():
     user = g.user
 
@@ -34,7 +34,7 @@ def index():
     )
 
 
-@app.route('/user/<nickname>', methods=['GET', 'POST'])
+@app.route('/user/<nickname>')
 def user(nickname):
     user = User.query.filter_by(nickname=nickname).first()
     if user is None:
