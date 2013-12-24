@@ -24,7 +24,7 @@
 	<div class="col-md-8 col-md-offset-2">
 		{% for trade in trades %}
 		<div class="col-md-4 col-xs-4">
-			<p class="text-center"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format(trade.id)) }}" alt="{{ trade.species}}"></p>
+			<p class="text-center"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}"></p>
 		</div>
 		{% endfor %}
 	</div>
@@ -33,7 +33,7 @@
 	<div class="col-md-8 col-md-offset-2">
 		{% for trade in trades %}
 		<div class="col-md-4 col-xs-4">
-			<p class="text-center"><small>{{trade.owner}}'s {{trade.species}}</small></p>
+			<p class="text-center"><small>{{trade.owner.nickname}}'s {{trade.species}}</small></p>
 		</div>
 		{% endfor %}
 	</div>
