@@ -19,8 +19,8 @@ def before_request():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     user = g.user
-    
-    trades = Trade.query.all()[:3]
+
+    trades = Trade.query.all()[-3:]
     sForm = SearchForm()
     lForm = LoginForm()
 
