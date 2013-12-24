@@ -1,7 +1,7 @@
 from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from forms import SearchForm, LoginForm, EditUserForm
+from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
 from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 
@@ -70,10 +70,12 @@ def user(nickname):
         {'owner': user, 'species': 'Surskit'}
     ]
     lForm = LoginForm()
+    taForm = NewTradeForm()
     return render_template('user.html',
                            user=user,
                            trades=trades,
                            lForm=lForm,
+                           taForm=taForm,
                            providers=app.config['OPENID_PROVIDERS'],
                            loginSuccess=True)
 

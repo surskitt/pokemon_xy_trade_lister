@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, TextAreaField, SelectField, IntegerField
+from wtforms import TextField, BooleanField, TextAreaField, SelectField, IntegerField, DecimalField, SelectMultipleField
 from wtforms.validators import Required, Length, NumberRange
 from models import User
 from forms_selectors import national_dex, natures, abilities, moves
@@ -34,17 +34,16 @@ class EditUserForm(Form):
         return True
 
 class NewTradeForm(Form):
-    post = SelectField('species', choices=national_dex, default=1)
-    count = IntegerField('count', default=0)
+    iv_tup = [(str(i),(i)) for i in range(1,32) + ['?']]
+
+    species = SelectField('species', choices=national_dex, default=1)
+    count = IntegerField('count', default=1)
     nature = SelectField('nature', choices=natures, default=1)
     ability = SelectField('ability', choices=abilities, default=1)
-    iv_hp = IntegerField('iv_hp', validators = [NumberRange(min=-1, max=31)])
-    iv_atk = IntegerField('iv_atk', validators = [NumberRange(min=-1, max=31)])
-    iv_def = IntegerField('iv_def', validators = [NumberRange(min=-1, max=31)])
-    iv_spa = IntegerField('iv_spa', validators = [NumberRange(min=-1, max=31)])
-    iv_spd = IntegerField('iv_spd', validators = [NumberRange(min=-1, max=31)])
-    iv_spe = IntegerField('iv_spe', validators = [NumberRange(min=-1, max=31)])
-    move1 = SelectField('move1', choices=moves, default=1)
-    move2 = SelectField('move2', choices=moves, default=1)
-    move3 = SelectField('move3', choices=moves, default=1)
-    move4 = SelectField('move4', choices=moves, default=1)
+    iv_hp = SelectField('iv_hp', choices=iv_tup, default=0)
+    iv_atk = SelectField('iv_atk', choices=iv_tup, default=0)
+    iv_def = SelectField('iv_def', choices=iv_tup, default=0)
+    iv_spa = SelectField('iv_spa', choices=iv_tup, default=0)
+    iv_spd = SelectField('iv_spd', choices=iv_tup, default=0)
+    iv_spe = SelectField('iv_spe', choices=iv_tup, default=0)
+    moves = SelectMultipleField('moves', choices=moves, default=1)
