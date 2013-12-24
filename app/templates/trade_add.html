@@ -2,9 +2,9 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-select.css') }}">
 <div class="container">
-	<form action="" method="post" name="post" role="form" class="form-inline">
+	<form action="" method="post" name="addtrade" role="form">
 		{{taForm.hidden_tag()}}
-		<div class="row" style="padding-bottom: 10px">
+		<div class="row">
 			<div class="form-group col-md-8">
 				<div class="col-md-4">
 					<label for="inputSpecies">Species</label>
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="padding-bottom: 10px">
+		<div class="row">
 			<div class="form-group col-md-8">
 				<div class="col-md-4">
 					<label for="inputNature">Nature</label>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="padding-bottom: 10px">
+		<div class="row">
 			<div class="form-group col-md-11">
 				<div class="col-md-12">
 					<label>IVs</label>
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" style="padding-bottom: 20px">
+		<div class="row">
 			<div class="form-group col-md-8">
 				<div class="col-md-8">
 					<label for="inputMoves">Moves</label>
