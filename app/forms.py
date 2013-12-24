@@ -34,7 +34,7 @@ class EditUserForm(Form):
         return True
 
 class NewTradeForm(Form):
-    iv_tup = [(str(i),(i)) for i in range(1,32) + ['?']]
+    iv_tup = [(str(i),(i)) for i in range(0,32) + ['?']]
 
     species = SelectField('species', choices=national_dex, default=1)
     count = IntegerField('count', default=1)
