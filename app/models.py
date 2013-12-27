@@ -50,6 +50,7 @@ class Trade(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     dex_no = db.Column(db.Integer)
     species = db.Column(db.String(30))
+    gender = db.Column(db.String(6))
     count = db.Column(db.Integer)
     nature = db.Column(db.String(30))
     ability = db.Column(db.String(30))
@@ -65,4 +66,4 @@ class Trade(db.Model):
     move4 = db.Column(db.String(30))
 
     def __repr__(self):
-        return '<Post %r>' % (self.body)
+        return '<Post %r: %r>' % (self.owner.nickname, self.species)

@@ -37,6 +37,7 @@ class NewTradeForm(Form):
     iv_tup = [(str(i),(i)) for i in range(0,32) + ['?']]
 
     species = SelectField('species', choices=national_dex, default=1)
+    gender = SelectField('gender', choices=[('Male', 'Male'), ('Female', 'Female')], default=1)
     count = IntegerField('count', default=1)
     nature = SelectField('nature', choices=natures, default=1)
     ability = SelectField('ability', choices=abilities, default=1)

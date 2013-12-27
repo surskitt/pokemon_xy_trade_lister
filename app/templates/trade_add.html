@@ -11,6 +11,10 @@
 					{{ taForm.species(class_="selectpicker", id="inputSpecies", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
 				<div class="col-md-2">
+					<label for="inputGender">Gender</label>
+					{{ taForm.gender(class_="selectpicker", id="inputGender", **{'data-width': '100%'}) }}
+				</div>
+				<div class="col-md-2">
 					<label for="inputCount">Count</label>
 					{{ taForm.count(class_="form-control", id="inputCount") }}
 				</div>
