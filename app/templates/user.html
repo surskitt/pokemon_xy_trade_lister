@@ -13,13 +13,14 @@
 		{% if user.last_seen %}
 		<div class="row"><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></div>
 		{% endif %}
+		<div class="row">{% if user.id == g.user.id %}<p><a href="{{url_for('edit')}}">Edit</a></p>{% endif %}</div>
 	</div>
 </div>
 <div class="row">
 	{% for trade in trades.items %}
 	<div class="col-md-3 col-xs-6">
-		<div class="col-md-6">
-			<img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}">
+		<div class="col-md-6 text-center">
+			<div class="row"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}"></div>
 		</div>
 		<div class="col-md-6">
 			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender}})</div>
@@ -50,7 +51,7 @@
 	{% endif %}
 </ul>
 {% if user.id == g.user.id %}
-<div class="row" style="padding-top: 30px">
+<div class="row">
 	<div class="col-md-offset-4 col-md-4">
 		<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#newTradeModal"><span class="glyphicon glyphicon-plus-sign"></span> Add new</button>
 	</div>
