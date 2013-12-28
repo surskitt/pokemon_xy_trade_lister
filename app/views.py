@@ -191,3 +191,19 @@ def search_results(query):
                            query=query,
                            results=results,
                            lForm=lForm)
+
+
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    trade = Trade.query.get(id)
+    if trade is None:
+        flash('Trade not found.')
+        return redirect(url_for('index'))
+    if trade.owner.id != g.user.id:
+        flash('You cannot delete this trade.')
+        return redirect(url_for('index'))
+    db.session.delete(trade)
+    db.session.commit()
+    flash('Your trade has been deleted.')
+    return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
