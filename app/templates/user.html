@@ -10,8 +10,9 @@
 	<div class="col-md-10 col-xs-8">
 		<div class="row"><h1>{{user.nickname}}</h1></div>
 		<div class="row">{% if user.about_me %}<p>{{user.about_me}}</p>{% endif %}</div>
-		<div class="row">{% if user.last_seen %}<p><i>Last seen on: {{user.last_seen}}</i></p>{% endif %}</div>
-		<div class="row">{% if user.id == g.user.id %}<p><a href="{{url_for('edit')}}">Edit</a></p>{% endif %}</div>
+		{% if user.last_seen %}
+		<div class="row"><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></div>
+		{% endif %}
 	</div>
 </div>
 <div class="row">
