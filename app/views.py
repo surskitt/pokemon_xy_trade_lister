@@ -18,7 +18,6 @@ def before_request():
 
 
 @app.route('/')
-@app.route('/index')
 def index():
     user = g.user
 
