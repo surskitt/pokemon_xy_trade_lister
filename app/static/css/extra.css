@@ -31,3 +31,11 @@ body { padding-top: 5px; }
 .modal-vertical-centered {
 	padding-top: 30px;
 }
+
+.form-control.ivSelector {
+	padding: 6px 6px;
+}
+
+#ModalForm {
+	width: 45%;
+}

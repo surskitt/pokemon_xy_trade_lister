@@ -2,71 +2,71 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-select.css') }}">
 <div class="container">
-	<form method="post" name="new_trade" role="form" action="/new_trade">
+	<form method="post" name="new_trade" role="form" action="/new_trade" id="ModalForm">
 		{{taForm.hidden_tag()}}
 		<div class="row">
-			<div class="form-group col-md-8">
-				<div class="col-md-4">
+			<div class="form-group col-md-12">
+				<div class="col-md-6">
 					<label for="inputSpecies">Species</label>
 					{{ taForm.species(class_="selectpicker", id="inputSpecies", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="inputGender">Gender</label>
 					{{ taForm.gender(class_="selectpicker", id="inputGender", **{'data-width': '100%'}) }}
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="inputCount">Count</label>
 					{{ taForm.count(class_="form-control", id="inputCount") }}
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-md-8">
-				<div class="col-md-4">
+			<div class="form-group col-md-12">
+				<div class="col-md-6">
 					<label for="inputNature">Nature</label>
 						{{ taForm.nature(class_="selectpicker", id="inputNature", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="inputAbility">Ability</label>
-					{{ taForm.ability(class_="selectpicker", id="inputAbility", **{'data-live-search': 'true', 'data-size': '10'}) }}
+					{{ taForm.ability(class_="selectpicker", id="inputAbility", **{'data-live-search': 'true', 'data-size': '10', 'data-width': '100%'}) }}
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-md-11">
+			<div class="form-group col-md-12">
 				<div class="col-md-12">
-					<label><abbr title="HP/Attack/Defence/Special attack/Special Defence/Speed">IVs</abbr></label>
+					<label for="inputHP"><abbr title="HP/Attack/Defence/Special attack/Special Defence/Speed">IVs</abbr></label>
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_hp(class_="form-control", id="inputHP", **{'data-width': '100%'}) }}
+				<div class="col-md-2" style="padding-bottom: 10px">
+					{{ taForm.iv_hp(class_="form-control ivSelector", id="inputHP") }}
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_atk(class_="form-control", id="inputAtk", **{'data-width': '100%'}) }}
+				<div class="col-md-2">
+					{{ taForm.iv_atk(class_="form-control ivSelector", id="inputAtk") }}
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_def(class_="form-control", id="inputDef", **{'data-width': '100%'}) }}
+				<div class="col-md-2">
+					{{ taForm.iv_def(class_="form-control ivSelector", id="inputDef") }}
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_spa(class_="form-control", id="inputSpA", **{'data-width': '100%'}) }}
+				<div class="col-md-2">
+					{{ taForm.iv_spa(class_="form-control ivSelector", id="inputSpA") }}
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_spd(class_="form-control", id="inputSpD", **{'data-width': '100%'}) }}
+				<div class="col-md-2">
+					{{ taForm.iv_spd(class_="form-control ivSelector", id="inputSpD") }}
 				</div>
-				<div class="col-md-1">
-					{{ taForm.iv_spe(class_="form-control", id="inputSpe", **{'data-width': '100%'}) }}
+				<div class="col-md-2">
+					{{ taForm.iv_spe(class_="form-control ivSelector", id="inputSpe") }}
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="form-group col-md-8">
-				<div class="col-md-8">
-					<label for="inputMoves"><abbr title="Pick just 4 moves">Moves</abbr></label>
+			<div class="form-group col-md-12">
+				<div class="col-md-12">
+					<label for="inputMoves"><abbr title="Pick just 4 moves, only the first 4 will be added.">Moves</abbr></label>
 					{{ taForm.moves(class_="selectpicker", id="inputMoves", **{'data-live-search': 'true', 'data-width': '100%', 'data-size': '10'}) }}
 				</div>
 			</div>
 		</div>
-		<div class="form-group col-md-8">
-			<div class="col-md-offset-2 col-md-4">
+		<div class="form-group col-md-12">
+			<div class="col-md-offset-4 col-md-4">
 				<button type="submit" class="btn btn-success btn-block">Add</button>
 			</div>
 		</div>
