@@ -2,27 +2,51 @@
 {% extends "sub.html" %}
 {% block body %}
 {{ super() }}
-<table>
-		<tr valign="top">
-				<td><img src="{{user.avatar(128)}}"></td>
-				<td>
-						<h1>User: {{user.nickname}}</h1>
-						{% if user.about_me %}<p>{{user.about_me}}</p>{% endif %}
-						{% if user.last_seen %}<p><i>Last seen on: {{user.last_seen}}</i></p>{% endif %}
-						{% if user.id == g.user.id %}<p><a href="{{url_for('edit')}}">Edit</a></p>{% endif %}
-				</td>
-		</tr>
-</table>
-<hr>
-{% for trade in trades %}
+<div class="row well well-lg">
+	<div class="col-md-2 col-xs-4">
+		<img src="{{user.avatar(128)}}" class="img-thumbnail">
+	</div>
+	<div class="col-md-10 col-xs-8">
+		<div class="row"><h1>{{user.nickname}}</h1></div>
+		<div class="row">{% if user.about_me %}<p>{{user.about_me}}</p>{% endif %}</div>
+		<div class="row">{% if user.last_seen %}<p><i>Last seen on: {{user.last_seen}}</i></p>{% endif %}</div>
+		<div class="row">{% if user.id == g.user.id %}<p><a href="{{url_for('edit')}}">Edit</a></p>{% endif %}</div>
+	</div>
+</div>
+<!-- {% for trade in trades %}
 <p>
 	{{trade.owner.nickname}} has: <b>{{trade.species}}</b>
 </p>
-{% endfor %}
-{% if user.id == g.user.id %}
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTradeModal"><span class="glyphicon glyphicon-plus-sign"></span> Add new</button>
-{% endif %}
+{% endfor %} -->
 <!-- Modal -->
+<div class="row">
+	{% for trade in trades %}
+	<div class="col-md-3 col-xs-6">
+		<div class="col-md-6">
+			<img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}">
+		</div>
+		<div class="col-md-6">
+			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender}}) x{{trade.count}}</div>
+			<div class="row">{{ trade.nature }}</div>
+			<div class="row">{{ trade.ability }}</div>
+			<div class="row">{{ trade.iv_hp }}/{{trade.iv_atk}}/{{trade.iv_def}}/{{trade.iv_spa}}/{{trade.iv_spd}}/{{trade.iv_spe}}</div>
+			{% if trade.move1 %}<div class="row"><abbr title="{{ trade.move1 }}{% if trade.move2 %} / {{ trade.move2 }}{% endif %}{% if trade.move3 %} / {{ trade.move3 }}{% endif %}{% if trade.move4 %}{{ trade.move4 }}{% endif %}">Moves</abbr></div>{% endif %}
+		</div>
+	</div>
+	{% if loop.index == 4 %}
+	</div>
+	<hr>
+	<div class="row">
+	{% endif %}
+	{% endfor %}
+</div>
+{% if user.id == g.user.id %}
+<div class="row" style="padding-top: 30px">
+	<div class="col-md-offset-4 col-md-4">
+		<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#newTradeModal"><span class="glyphicon glyphicon-plus-sign"></span> Add new</button>
+	</div>
+</div>
+{% endif %}
 <div class="modal fade" id="newTradeModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">

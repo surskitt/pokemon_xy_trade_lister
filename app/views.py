@@ -144,6 +144,7 @@ def new_trade():
             owner=g.user,
             dex_no=ntForm.species.data.split(',')[0],
             species=ntForm.species.data.split(',')[1],
+            gender=ntForm.gender.data,
             count=ntForm.count.data,
             nature=ntForm.nature.data,
             ability=ntForm.ability.data,
