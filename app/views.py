@@ -35,12 +35,13 @@ def index():
 
 
 @app.route('/user/<nickname>')
-def user(nickname):
+@app.route('/user/<nickname>/<int:page>')
+def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
     if user is None:
         flash('User ' + nickname + ' not found.')
         return redirect(url_for('index'))
-    trades = user.trades.limit(8).all()
+    trades = user.trades.paginate(page, 8, False)
     lForm = LoginForm()
     taForm = NewTradeForm()
     return render_template('user.html',
