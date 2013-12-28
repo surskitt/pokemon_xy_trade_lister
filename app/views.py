@@ -40,10 +40,7 @@ def user(nickname):
     if user is None:
         flash('User ' + nickname + ' not found.')
         return redirect(url_for('index'))
-    trades = [
-        {'owner': user, 'species': 'Bulbasaur'},
-        {'owner': user, 'species': 'Surskit'}
-    ]
+    trades = user.trades.all()
     lForm = LoginForm()
     taForm = NewTradeForm()
     return render_template('user.html',
