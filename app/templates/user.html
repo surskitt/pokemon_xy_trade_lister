@@ -21,9 +21,15 @@
 	<div class="col-md-3 col-xs-6">
 		<div class="col-md-6 text-center">
 			<div class="row"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}"></div>
+			{% if user.id == g.user.id %}
+			<div class="row" style="padding-top: 10px">
+				<span class="glyphicon glyphicon-pencil"></span>
+				<a href="{{url_for('delete', id=trade.id)}}"><span class="glyphicon glyphicon-trash"></span>
+			</div></a>
+			{% endif %}
 		</div>
 		<div class="col-md-6">
-			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender}})</div>
+			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender[0]}})</div>
 			<div class="row">x{{trade.count}}</div>
 			<div class="row">{{ trade.nature }}</div>
 			<div class="row">{{ trade.ability }}</div>

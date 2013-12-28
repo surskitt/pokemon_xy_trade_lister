@@ -14,7 +14,7 @@
 		</div>
 		<div class="col-md-6">
 			<div class="row"><a href="{{ url_for('user', nickname=trade.owner.nickname) }}">{{trade.owner.nickname}}</a></div>
-			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender}})</div>
+			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender[0]}})</div>
 
 			<div class="row">x{{trade.count}}</div>
 			<div class="row">{{ trade.nature }}</div>
