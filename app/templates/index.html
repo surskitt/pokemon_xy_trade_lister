@@ -33,7 +33,7 @@
 	<div class="col-md-8 col-md-offset-2">
 		{% for trade in trades %}
 		<div class="col-md-4 col-xs-4">
-			<p class="text-center"><small>{{trade.owner.nickname}}'s {{trade.species}}</small></p>
+			<p class="text-center"><small><a href="{{ url_for('user', nickname=trade.owner.nickname) }}">{{trade.owner.nickname}}</a>'s {{trade.species}}</small></p>
 		</div>
 		{% endfor %}
 	</div>

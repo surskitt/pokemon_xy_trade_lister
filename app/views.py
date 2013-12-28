@@ -40,7 +40,7 @@ def user(nickname):
     if user is None:
         flash('User ' + nickname + ' not found.')
         return redirect(url_for('index'))
-    trades = user.trades.all()
+    trades = user.trades.limit(8).all()
     lForm = LoginForm()
     taForm = NewTradeForm()
     return render_template('user.html',
