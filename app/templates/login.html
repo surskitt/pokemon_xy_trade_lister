@@ -9,7 +9,7 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			{% for pr in providers %}
-			<a href="javascript:set_openid('{{pr.url}}', '{{pr.name}}');"><img src="/static/img/social_icons/{{pr.name.lower()}}.png" class="img-polaroid" style="margin:2px;" /></a>
+			<a href="javascript:set_openid('{{pr.url}}', '{{pr.name}}');"><img src="{{url_for('static', filename='img/social_icons/{}.png'.format(pr.name.lower()))}}" alt="">
 			{% endfor %}
 		</div>
 	</div>
