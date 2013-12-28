@@ -30,7 +30,7 @@
 			<div class="row">{{ trade.nature }}</div>
 			<div class="row">{{ trade.ability }}</div>
 			<div class="row">{{ trade.iv_hp }}/{{trade.iv_atk}}/{{trade.iv_def}}/{{trade.iv_spa}}/{{trade.iv_spd}}/{{trade.iv_spe}}</div>
-			{% if trade.move1 %}<div class="row"><abbr title="{{ trade.move1 }}{% if trade.move2 %} / {{ trade.move2 }}{% endif %}{% if trade.move3 %} / {{ trade.move3 }}{% endif %}{% if trade.move4 %}{{ trade.move4 }}{% endif %}">Moves</abbr></div>{% endif %}
+			{% if trade.move1 %}<div class="row"><abbr title="{{ trade.move1 }}{% if trade.move2 %} / {{ trade.move2 }}{% endif %}{% if trade.move3 %} / {{ trade.move3 }}{% endif %}{% if trade.move4 %} / {{ trade.move4 }}{% endif %}">Moves</abbr></div>{% endif %}
 		</div>
 	</div>
 	{% if loop.index == 4 %}
