@@ -4,6 +4,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
 from models import User, ROLE_USER, ROLE_ADMIN, Trade
 from datetime import datetime
+from config import MAX_SEARCH_RESULTS
 
 
 @app.before_request
@@ -135,7 +136,7 @@ def after_login(resp):
 def new_trade():
     def index_or_none(l, i):
         if len(l) >= i + 1:
-            return l[i] 
+            return l[i]
         else:
             return None
 
@@ -155,17 +156,38 @@ def new_trade():
             iv_spa=ntForm.iv_spa.data,
             iv_spd=ntForm.iv_spd.data,
             iv_spe=ntForm.iv_spe.data,
-            move1=index_or_none(ntForm.moves.data,0),
-            move2=index_or_none(ntForm.moves.data,1),
-            move3=index_or_none(ntForm.moves.data,2),
-            move4=index_or_none(ntForm.moves.data,3)
+            move1=index_or_none(ntForm.moves.data, 0),
+            move2=index_or_none(ntForm.moves.data, 1),
+            move3=index_or_none(ntForm.moves.data, 2),
+            move4=index_or_none(ntForm.moves.data, 3)
         )
         db.session.add(trade)
         db.session.commit()
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
-
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+@app.route('/search', methods=['POST'])
+@login_required
+def search():
+    sForm = SearchForm()
+
+    if not sForm.validate_on_submit():
+        return redirect(request.args.get('next') or url_for('index'))
+    return redirect(url_for('search_results', query=sForm.search.data))
+
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+    lForm = LoginForm()
+
+    results = Trade.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html',
+                           query=query,
+                           results=results,
+                           lForm=lForm)

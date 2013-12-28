@@ -1,4 +1,5 @@
-from app import db
+from app import app, db
+import flask.ext.whooshalchemy as whooshalchemy
 from hashlib import md5
 
 ROLE_USER = 0
@@ -46,6 +47,8 @@ class User(db.Model):
 
 
 class Trade(db.Model):
+    __searchable__ = ['species', 'gender', 'nature', 'ability', 'move1', 'move2', 'move3', 'move4']
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     dex_no = db.Column(db.Integer)
@@ -67,3 +70,5 @@ class Trade(db.Model):
 
     def __repr__(self):
         return '<Post %r: %r>' % (self.owner.nickname, self.species)
+
+whooshalchemy.whoosh_index(app, Trade)
