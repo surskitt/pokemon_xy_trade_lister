@@ -29,7 +29,7 @@
 			{% endif %}
 		</div>
 		<div class="col-md-6">
-			<div class="row"><strong>{{ trade.species }}</strong> ({{trade.gender[0]}})</div>
+			<div class="row"><strong>{{ trade.species }}</strong>{% if trade.gender != 'None' %} ({{trade.gender[0]}}){% endif %}</div>
 			<div class="row">x{{trade.count}}</div>
 			<div class="row">{{ trade.nature }}</div>
 			<div class="row">{{ trade.ability }}</div>
