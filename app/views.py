@@ -46,6 +46,8 @@ def user(nickname, page=1):
     lForm = LoginForm()
     taForm = NewTradeForm()
     eForm = EditUserForm(g.user.nickname)
+    eForm.nickname.data = g.user.nickname
+    eForm.about_me.data = g.user.about_me
     return render_template('user.html',
                            user=user,
                            trades=trades,
