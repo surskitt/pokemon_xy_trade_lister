@@ -9,11 +9,13 @@
 	</div>
 	<div class="col-md-10 col-xs-8">
 		<div class="row"><h1>{{user.nickname}}</h1></div>
-		<div class="row">{% if user.about_me %}<p>{{user.about_me}}</p>{% endif %}</div>
-		{% if user.last_seen %}
-		<div class="row"><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></div>
+		{% if user.about_me %}
+		<div class="row"><p>{{user.about_me}}</p></div>
 		{% endif %}
-		<div class="row">{% if user.id == g.user.id %}<p><a href="javascript:toggleAboutEdit()">Edit</a></p>{% endif %}</div>
+		{% if user.last_seen %}
+		<div class="row"><p><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></p></div>
+		{% endif %}
+		<div class="row">{% if user.id == g.user.id %}<a href="javascript:toggleAboutEdit()" class="btn btn-default btn-xs">Edit</a>{% endif %}</div>
 	</div>
 </div>
 <div class="row well well-lg" style="display: none" id="userInfoEdit">
