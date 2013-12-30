@@ -3,7 +3,7 @@
 {% block body %}
 {{ super() }}
 <div class="row" style="padding-bottom: 30px"></div>
-<div class="row well well-lg">
+<div class="row well well-lg" id="userInfo">
 	<div class="col-md-2 col-xs-4">
 		<img src="{{user.avatar(128)}}" class="img-thumbnail">
 	</div>
@@ -13,8 +13,30 @@
 		{% if user.last_seen %}
 		<div class="row"><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></div>
 		{% endif %}
-		<div class="row">{% if user.id == g.user.id %}<p><a href="{{url_for('edit')}}">Edit</a></p>{% endif %}</div>
+		<div class="row">{% if user.id == g.user.id %}<p><a href="{{url_for('profile_edit')}}">Edit</a></p>{% endif %}</div>
 	</div>
+</div>
+<div class="row well well-lg" style="display: none" id="userInfoEdit">
+	<form action="{{ url_for('profile_edit') }}" method="post" name="edit">
+	    {{eForm.hidden_tag()}}
+	    <table>
+	        <td>Your nickname:</td>
+	        <td>
+	            {{eForm.nickname(size = 24)}}
+	            {% for error in eForm.errors.nickname %}
+	            <br><span style="color: red;">[{{error}}]</span>
+	            {% endfor %}
+	        </td>
+	        <tr>
+	            <td>About yourself:</td>
+	            <td>{{eForm.about_me(cols = 32, rows = 4)}}</td>
+	        </tr>
+	        <tr>
+	            <td></td>
+	            <td><input type="submit" value="Save Changes"></td>
+	        </tr>
+	    </table>
+	</form>
 </div>
 <div class="row">
 	{% for trade in trades.items %}

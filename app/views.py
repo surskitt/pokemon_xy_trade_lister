@@ -2,7 +2,7 @@ from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
-from models import User, ROLE_USER, ROLE_ADMIN, Trade
+from models import User, Trade, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
 from flask.ext.sqlalchemy import get_debug_queries
@@ -35,8 +35,8 @@ def index():
     )
 
 
-@app.route('/user/<nickname>')
-@app.route('/user/<nickname>/<int:page>')
+@app.route('/user/<nickname>', methods=['GET', 'POST'])
+@app.route('/user/<nickname>/<int:page>', methods=['GET', 'POST'])
 def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
     if user is None:
@@ -45,11 +45,13 @@ def user(nickname, page=1):
     trades = user.trades.paginate(page, 8, False)
     lForm = LoginForm()
     taForm = NewTradeForm()
+    eForm = EditUserForm(g.user.nickname)
     return render_template('user.html',
                            user=user,
                            trades=trades,
                            lForm=lForm,
                            taForm=taForm,
+                           eForm=eForm,
                            providers=app.config['OPENID_PROVIDERS'])
 
 
@@ -75,23 +77,18 @@ def logout():
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
-def edit():
+def profile_edit():
     eForm = EditUserForm(g.user.nickname)
-    lForm = LoginForm()
     if eForm.validate_on_submit():
         g.user.nickname = eForm.nickname.data
         g.user.about_me = eForm.about_me.data
         db.session.add(g.user)
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit'))
     else:
         eForm.nickname.data = g.user.nickname
         eForm.about_me.data = g.user.about_me
-    return render_template('edit_profile.html',
-                           lForm=lForm,
-                           providers=app.config['OPENID_PROVIDERS'],
-                           eForm=eForm)
+    return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
 @app.errorhandler(404)
