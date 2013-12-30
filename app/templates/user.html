@@ -19,23 +19,14 @@
 <div class="row well well-lg" style="display: none" id="userInfoEdit">
 	<form action="{{ url_for('profile_edit') }}" method="post" name="edit">
 	    {{eForm.hidden_tag()}}
-	    <table>
-	        <td>Your nickname:</td>
-	        <td>
-	            {{eForm.nickname(size = 24)}}
-	            {% for error in eForm.errors.nickname %}
-	            <br><span style="color: red;">[{{error}}]</span>
-	            {% endfor %}
-	        </td>
-	        <tr>
-	            <td>About yourself:</td>
-	            <td>{{eForm.about_me(cols = 32, rows = 4)}}</td>
-	        </tr>
-	        <tr>
-	            <td></td>
-	            <td><input type="submit" value="Save Changes"></td>
-	        </tr>
-	    </table>
+	    <div class="col-md-2 col-xs-4">
+			<img src="{{user.avatar(128)}}" class="img-thumbnail">
+		</div>
+		<div class="col-md-10 col-xs-8">
+			<div class="form-group">{{eForm.nickname(class_="form-control")}}</div>
+			<div class="form-group">{{eForm.about_me(class_="form-control", rows = 2)}}</div>
+			<div class="form-group"><input type="submit" value="Save Changes" class="btn btn-default"></div>
+		</div>
 	</form>
 </div>
 <div class="row">
