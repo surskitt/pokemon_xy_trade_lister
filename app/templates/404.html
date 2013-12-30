@@ -2,6 +2,9 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h1>File Not Found</h1>
-<p><a href="{{url_for('index')}}">Back</a></p>
+<div class="jumbotron text-center">
+  <h1>File not found</h1>
+  <img src="{{url_for('static', filename='img/404_spinda.jpg')}}" alt="">
+  <div class="lead"><a href="javascript:history.back()">Back</a></div>
+</div>
 {% endblock %}
