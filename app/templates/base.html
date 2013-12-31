@@ -77,4 +77,14 @@
 			$('#inputOpenID').attr("placeholder", "Invalid OpenID, please try again.")
 		</script>
 	{% endif %} -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+				<script>
+					toastr.{{category}}('{{ message }}')
+				</script>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
 </body>
