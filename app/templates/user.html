@@ -10,7 +10,7 @@
 	<div class="col-md-10 col-xs-8">
 		<div class="row"><h1>{{user.nickname}}</h1></div>
 		{% if user.about_me %}
-		<div class="row"><p>{{user.about_me}}</p></div>
+		<div class="row"><p>{{user.about_me|markdown}}</p></div>
 		{% endif %}
 		{% if user.last_seen %}
 		<div class="row"><p><em>Last seen: {{momentjs(user.last_seen).calendar()}}</em></p></div>
