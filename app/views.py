@@ -2,7 +2,7 @@ from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
-from models import User, Trade, ROLE_USER, ROLE_ADMIN
+from models import User, Trade, ROLE_USER
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
 from flask.ext.sqlalchemy import get_debug_queries
@@ -23,7 +23,6 @@ def index():
 
     trades = Trade.query.all()[-3:]
     sForm = SearchForm()
-    lForm = LoginForm()
 
     return render_template(
         "index.html",
