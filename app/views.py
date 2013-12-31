@@ -40,7 +40,7 @@ def index():
 def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
     if user is None:
-        flash('User ' + nickname + ' not found.')
+        flash('User ' + nickname + ' not found.', 'error')
         return redirect(url_for('index'))
     trades = user.trades.paginate(page, 8, False)
     lForm = LoginForm()
@@ -71,12 +71,14 @@ def login():
         session['remember_me'] = lForm.remember_me.data
         return oid.try_login(lForm.openid.data, ask_for=['nickname', 'email'])
 
+    flash('Your openID was not recognised', 'error')
     return redirect(oid.get_next_url())
 
 
 @app.route('/logout')
 def logout():
     logout_user()
+    flash('You have been logged out', 'success')
     return redirect(oid.get_next_url())
 
 
