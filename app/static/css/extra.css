@@ -39,3 +39,7 @@ body { padding-top: 5px; }
 #ModalForm {
 	width: 45%;
 }
+
+#aboutMe img {
+	max-height: 20px;
+}
