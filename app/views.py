@@ -52,6 +52,7 @@ def user(nickname, page=1):
         eForm = EditUserForm('None')
     return render_template('user.html',
                            user=user,
+                           title="{}'s profile".format(user.nickname),
                            trades=trades,
                            lForm=lForm,
                            taForm=taForm,
