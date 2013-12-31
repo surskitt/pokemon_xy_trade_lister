@@ -45,9 +45,12 @@ def user(nickname, page=1):
     trades = user.trades.paginate(page, 8, False)
     lForm = LoginForm()
     taForm = NewTradeForm()
-    eForm = EditUserForm(g.user.nickname)
-    eForm.nickname.data = g.user.nickname
-    eForm.about_me.data = g.user.about_me
+    if g.user.is_authenticated():
+        eForm = EditUserForm(g.user.nickname)
+        eForm.nickname.data = g.user.nickname
+        eForm.about_me.data = g.user.about_me
+    else:
+        eForm = EditUserForm('None')
     return render_template('user.html',
                            user=user,
                            trades=trades,
