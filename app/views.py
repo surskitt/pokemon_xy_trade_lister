@@ -198,14 +198,14 @@ def search_results(query):
 def delete(id):
     trade = Trade.query.get(id)
     if trade is None:
-        flash('Trade not found.')
+        flash('Trade not found.', 'error')
         return redirect(url_for('index'))
     if trade.owner.id != g.user.id:
-        flash('You cannot delete this trade.')
+        flash('You cannot delete this trade.', 'error')
         return redirect(url_for('index'))
     db.session.delete(trade)
     db.session.commit()
-    flash('Your trade has been deleted.')
+    flash('Your trade has been deleted.', 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
