@@ -69,6 +69,7 @@ def login():
     # if request.method == 'POST' and not sForm.validate_on_submit():
     if lForm.validate_on_submit():
         session['remember_me'] = lForm.remember_me.data
+        flash('You have been successfully logged in', 'success')
         return oid.try_login(lForm.openid.data, ask_for=['nickname', 'email'])
 
     flash('Your openID was not recognised', 'error')
@@ -91,7 +92,7 @@ def profile_edit():
         g.user.about_me = eForm.about_me.data
         db.session.add(g.user)
         db.session.commit()
-        flash('Your changes have been saved.')
+        flash('Your profile have been saved.', 'success')
     else:
         eForm.nickname.data = g.user.nickname
         eForm.about_me.data = g.user.about_me
