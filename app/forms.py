@@ -17,7 +17,7 @@ class LoginForm(Form):
 class EditUserForm(Form):
     nickname = TextField('nickname', validators=[Required()])
     about_me = TextAreaField(
-        'about_me', validators=[Length(min=0, max=140)])
+        'about_me', validators=[Length(min=0, max=500)])
 
     def __init__(self, original_nickname, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
