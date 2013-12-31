@@ -208,7 +208,7 @@ def delete(id):
         return redirect(url_for('index'))
     db.session.delete(trade)
     db.session.commit()
-    flash('Your trade has been deleted.', 'success')
+    flash('Your {} has been deleted.'.format(trade.species), 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
