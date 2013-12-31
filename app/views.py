@@ -162,7 +162,7 @@ def new_trade():
         )
         db.session.add(trade)
         db.session.commit()
-        flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'info')
+        flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
