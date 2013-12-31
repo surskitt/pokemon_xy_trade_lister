@@ -91,7 +91,7 @@ def profile_edit():
         g.user.about_me = eForm.about_me.data
         db.session.add(g.user)
         db.session.commit()
-        flash('Your profile have been saved.', 'success')
+        flash('Your profile has been saved.', 'success')
     else:
         eForm.nickname.data = g.user.nickname
         eForm.about_me.data = g.user.about_me
