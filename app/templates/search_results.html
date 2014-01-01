@@ -23,7 +23,7 @@
 			{% if trade.move1 %}<div class="row"><abbr title="{{ trade.move1 }}{% if trade.move2 %} / {{ trade.move2 }}{% endif %}{% if trade.move3 %} / {{ trade.move3 }}{% endif %}{% if trade.move4 %} / {{ trade.move4 }}{% endif %}">Egg moves</abbr></div>{% endif %}
 		</div>
 	</div>
-	{% if loop.index == 4 %}
+	{% if loop.index % 4 == 0 %}
 	</div>
 	<hr>
 	<div class="row">
