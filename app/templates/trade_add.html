@@ -10,13 +10,16 @@
 					<label for="inputSpecies">Species</label>
 					{{ taForm.species(class_="selectpicker", id="inputSpecies", **{'data-live-search': 'true', 'data-size': '10'}) }}
 				</div>
-				<div class="col-md-3">
-					<label for="inputGender">Gender</label>
-					{{ taForm.gender(class_="selectpicker", id="inputGender", **{'data-width': '100%'}) }}
-				</div>
-				<div class="col-md-3">
-					<label for="inputCount">Count</label>
-					{{ taForm.count(class_="form-control", id="inputCount") }}
+				<div class="col-md-6">
+					<div>
+						<label><abbr title="List the available genders you have for this trade.">Gender</abbr></label>
+					</div>
+					<div class="checkbox-inline">
+						{{ taForm.male(id="inputMale", value="Male") }} Male
+					</div>
+					<div class="checkbox-inline">
+						{{ taForm.female(id="inputFemale", value="Female") }} Female
+					</div>
 				</div>
 			</div>
 		</div>

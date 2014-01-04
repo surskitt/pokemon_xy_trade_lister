@@ -47,14 +47,14 @@ class User(db.Model):
 
 
 class Trade(db.Model):
-    __searchable__ = ['species', 'gender', 'nature', 'ability', 'move1', 'move2', 'move3', 'move4']
+    __searchable__ = ['species', 'nature', 'ability', 'move1', 'move2', 'move3', 'move4']
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     dex_no = db.Column(db.Integer)
     species = db.Column(db.String(30))
-    gender = db.Column(db.String(6))
-    count = db.Column(db.Integer)
+    male = db.Column(db.Boolean)
+    female = db.Column(db.Boolean)
     nature = db.Column(db.String(30))
     ability = db.Column(db.String(30))
     iv_hp = db.Column(db.Integer)

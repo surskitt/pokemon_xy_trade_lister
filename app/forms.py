@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, TextAreaField, SelectField, IntegerField, SelectMultipleField
+from wtforms import TextField, BooleanField, TextAreaField, SelectField, IntegerField, SelectMultipleField, BooleanField
 from wtforms.validators import Required, Length
 from models import User
 from forms_selectors import national_dex, natures, abilities, moves
@@ -40,9 +40,11 @@ class NewTradeForm(Form):
     iv_tup = [(str(i), (i)) for i in range(0, 32) + ['?']]
 
     species = SelectField('species', choices=national_dex, default=1)
-    gender = SelectField(
-        'gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('None', 'None')], default=1)
-    count = IntegerField('count', default=1)
+    # gender = SelectField(
+        # 'gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('None', 'None')], default=1)
+    # count = IntegerField('count', default=1)
+    male = BooleanField('male')
+    female = BooleanField('female')
     nature = SelectField('nature', choices=natures, default=1)
     ability = SelectField('ability', choices=abilities, default=1)
     iv_hp = SelectField('iv_hp', choices=iv_tup, default=31)
