@@ -69,6 +69,17 @@ class Trade(db.Model):
     move3 = db.Column(db.String(30))
     move4 = db.Column(db.String(30))
 
+    def ivSpread(self):
+        ivs = [
+            self.iv_hp,
+            self.iv_atk,
+            self.iv_def,
+            self.iv_spa,
+            self.iv_spd,
+            self.iv_spe
+        ]
+        return "/".join()
+
     def __repr__(self):
         return '<Post %r: %r>' % (self.owner.nickname, self.species)
 
