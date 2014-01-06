@@ -1,6 +1,7 @@
 from app import app, db
 import flask.ext.whooshalchemy as whooshalchemy
 from hashlib import md5
+import json
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -78,7 +79,12 @@ class Trade(db.Model):
             self.iv_spd,
             self.iv_spe
         ]
-        return "/".join()
+        return "/".join(ivs)
+
+    def toJson(self):
+        d = self.__dict__.copy()
+        del d['_sa_instance_state']
+        return json.dumps(d)
 
     def __repr__(self):
         return '<Post %r: %r>' % (self.owner.nickname, self.species)

@@ -170,7 +170,8 @@ def new_trade():
         )
         db.session.add(trade)
         db.session.commit()
-        flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
+        flash('Your {} was successfully added'.format(
+            ntForm.species.data.split(',')[1]), 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
@@ -214,6 +215,45 @@ def delete(id):
     db.session.delete(trade)
     db.session.commit()
     flash('Your {} has been deleted.'.format(trade.species), 'success')
+    return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
+
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    def index_or_none(l, i):
+        if len(l) >= i + 1:
+            return l[i]
+        else:
+            return None
+
+    ntForm = NewTradeForm()
+    if ntForm.validate_on_submit():
+        trade = Trade.query.get(id)
+        if trade is None:
+            flash('Trade not found.', 'error')
+            return redirect(url_for('index'))
+        if trade.owner.id != g.user.id:
+            flash('You cannot edit this trade.', 'error')
+            return redirect(url_for('index'))
+        trade.dex_no = ntForm.species.data.split(',')[0]
+        trade.species = ntForm.species.data.split(',')[1]
+        trade.male = ntForm.male.data
+        trade.female = ntForm.female.data
+        trade.nature = ntForm.nature.data
+        trade.ability = ntForm.ability.data
+        trade.iv_hp = ntForm.iv_hp.data
+        trade.iv_atk = ntForm.iv_atk.data
+        trade.iv_def = ntForm.iv_def.data
+        trade.iv_spa = ntForm.iv_spa.data
+        trade.iv_spd = ntForm.iv_spd.data
+        trade.iv_spe = ntForm.iv_spe.data
+        trade.move1 = index_or_none(ntForm.moves.data, 0)
+        trade.move2 = index_or_none(ntForm.moves.data, 1)
+        trade.move3 = index_or_none(ntForm.moves.data, 2)
+        trade.move4 = index_or_none(ntForm.moves.data, 3)
+        db.session.commit()
+        flash('Your {} was successfully edited'.format(ntForm.species.data.split(',')[1]), 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
