@@ -184,47 +184,53 @@ def new_trade_csv():
         species_list = [i[0].split(',')[1].title() for i in national_dex]
         nature_list = [i[0].title() for i in natures]
         ability_list = [i[0].title() for i in abilities]
-        move_list = [i[0].title() for i in moves] + ['']
+        move_list = [i[0].title() for i in moves]
         iv_range = [str(i) for i in range(32)]
         for row in ntcForm.csv.data.splitlines():
-            t_species, gender, nature, ability, iv_hp, iv_atk, iv_def, iv_spa, iv_spd, iv_spe, egg1, egg2, egg3, egg4 = row.split(',')
-            t_ivs = [iv_hp, iv_atk, iv_def, iv_spa, iv_spd, iv_spe]
-            t_moves = [egg1, egg2, egg3, egg4]
-            if t_species.title() not in species_list:
-                flash('{} is not a valid species name'.format(t_species), 'error')
-            elif gender.title() not in ['Male', 'Female', 'None']:
-                flash('Please choose Male, Female or None as the gender', 'error')
-            elif nature.title() not in nature_list:
-                flash('{} is not a valid nature'.format(nature), 'error')
-            elif ability.title() not in ability_list:
-                flash('{} is not a valid ability name'.format(ability), 'error')
-            elif len(filter(lambda x: x not in iv_range and x != '?', t_ivs)) > 0:
-                flash('Please choose IVs between 0 and 31, or ?', 'error')
-            elif len(filter(lambda x: x.title() not in move_list, t_moves)) > 0:
-                print t_moves
-                for move in filter(lambda x: x.title() not in move_list, t_moves):
-                    flash('{} is not a valid move'.format(move), 'error')
+            if len(row.split(',')) >= 11:
+                t_species, male, female, nature, ability = [i.title() for i in row.split(',')[:5]]
+                t_ivs = [i.title() for i in row.split(',')[5:11]]
+                t_moves = [i.title() for i in row.split(',')[11:] if i != '']
+                if t_species not in species_list:
+                    flash('{} is not a valid species name'.format(t_species), 'error')
+                elif male not in ['True', 'False']:
+                    flash('Please choose True or False for the male value', 'error')
+                elif female not in ['True', 'False']:
+                    flash('Please choose True or False for the female value' 'error')
+                elif nature not in nature_list:
+                    flash('{} is not a valid nature'.format(nature), 'error')
+                elif ability not in ability_list:
+                    flash('{} is not a valid ability name'.format(ability), 'error')
+                elif len(filter(lambda x: x not in iv_range and x != '?', t_ivs)) > 0:
+                    flash('Please choose IVs between 0 and 31, or ?', 'error')
+                elif len(filter(lambda x: x not in move_list, t_moves)) > 0:
+                    for move in filter(lambda x: x not in move_list, t_moves):
+                        flash('{} is not a valid move'.format(move), 'error')
+                else:
+                    for i in range(4 - len(t_moves)):
+                        t_moves.append(None)
+                    trade = Trade(
+                        owner=g.user,
+                        dex_no=species_list.index(t_species) + 1,
+                        species=t_species,
+                        male=True,
+                        female=False,
+                        nature=nature,
+                        ability=ability,
+                        iv_hp=t_ivs[0],
+                        iv_atk=t_ivs[1],
+                        iv_def=t_ivs[2],
+                        iv_spa=t_ivs[3],
+                        iv_spd=t_ivs[4],
+                        iv_spe=t_ivs[5],
+                        move1=t_moves[0],
+                        move2=t_moves[1],
+                        move3=t_moves[2],
+                        move4=t_moves[3]
+                    )
+                    db.session.add(trade)
             else:
-                trade = Trade(
-                    owner=g.user,
-                    dex_no=species_list.index(t_species) + 1,
-                    species=t_species.title(),
-                    male=True,
-                    female=False,
-                    nature=nature.title(),
-                    ability=ability.title(),
-                    iv_hp=iv_hp,
-                    iv_atk=iv_atk,
-                    iv_def=iv_def,
-                    iv_spa=iv_spa,
-                    iv_spd=iv_spd,
-                    iv_spe=iv_spe,
-                    move1=egg1.title(),
-                    move2=egg2.title(),
-                    move3=egg3.title(),
-                    move4=egg4.title()
-                )
-                db.session.add(trade)
+                flash('Please provide a valid format csv', 'error')
     else:
         flash('Form did not validate', 'error')
     db.session.commit()
