@@ -1,7 +1,7 @@
 from app import app, db, lm, oid
 from flask import render_template, redirect, session, url_for, request, g, flash
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm
+from forms import SearchForm, LoginForm, EditUserForm, NewTradeForm, NewTradeCsvForm
 from models import User, Trade, ROLE_USER
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
@@ -56,6 +56,7 @@ def user(nickname, page=1):
                            trades=trades,
                            lForm=lForm,
                            taForm=taForm,
+                           tacForm=NewTradeCsvForm(),
                            eForm=eForm,
                            providers=app.config['OPENID_PROVIDERS'])
 

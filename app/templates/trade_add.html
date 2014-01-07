@@ -74,6 +74,18 @@
 			</div>
 		</div>
 	</form>
+	<form method="post" name="new_trade_csv" role="form" action="#FORM_ACTION#" id="addTradeCsvForm" style="display: none">
+		<div class="row">
+			<div class="form-group col-md-12">
+				{{ tacForm.csv(class_="form-control", rows = 15) }}
+			</div>
+			<div class="form-group col-md-12">
+				<div class="col-md-offset-4 col-md-4">
+					<button type="submit" class="btn btn-success btn-block">Add</button>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <script>
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
