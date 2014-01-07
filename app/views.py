@@ -229,6 +229,7 @@ def new_trade_csv():
                         move4=t_moves[3]
                     )
                     db.session.add(trade)
+                    flash('Your trades were successfully imported', 'success')
             else:
                 flash('Please provide a valid format csv', 'error')
     else:
