@@ -3,7 +3,6 @@
 <div class="container">
 	<form method="post" name="new_trade" role="form" action="{{url_for('new_trade')}}" id="addTradeForm">
 		{{ taForm.hidden_tag() }}
-		{{ taForm.trade_id(id="inputTradeId") }}
 		<div class="row">
 			<div class="form-group col-md-12">
 				<div class="col-md-6">
@@ -79,7 +78,8 @@
 			</div>
 		</div>
 	</form>
-	<form method="post" name="new_trade_csv" role="form" action="#FORM_ACTION#" id="addTradeCsvForm" style="display: none">
+	<form method="post" name="new_trade_csv" role="form" action="{{url_for('new_trade_csv')}}" id="addTradeCsvForm" style="display: none">
+		{{ tacForm.hidden_tag() }}
 		<div class="row">
 			<div class="form-group col-md-12">
 				{{ tacForm.csv(class_="form-control", rows = 15, placeholder="Species, Gender, Nature, Ability, HP IV, Attack IV, Defence IV, Special Attack IV, Special defence IV, Speed IV, Egg move 1, Egg move 2, Egg move 3, Egg move 4") }}

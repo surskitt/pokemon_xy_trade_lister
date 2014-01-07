@@ -58,4 +58,4 @@ class NewTradeForm(Form):
 
 
 class NewTradeCsvForm(Form):
-    csv = TextAreaField('csv')
+    csv = TextAreaField('csv', validators=[Required()])

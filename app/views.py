@@ -6,6 +6,7 @@ from models import User, Trade, ROLE_USER
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
 from flask.ext.sqlalchemy import get_debug_queries
+from forms_selectors import national_dex, natures, abilities, moves
 
 
 @app.before_request
@@ -173,6 +174,60 @@ def new_trade():
         db.session.commit()
         flash('Your {} was successfully added'.format(
             ntForm.species.data.split(',')[1]), 'success')
+    return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
+
+
+@app.route('/new_trade_csv', methods=['GET', 'POST'])
+def new_trade_csv():
+    ntcForm = NewTradeCsvForm()
+    if ntcForm.validate_on_submit():
+        species_list = [i[0].split(',')[1].title() for i in national_dex]
+        nature_list = [i[0].title() for i in natures]
+        ability_list = [i[0].title() for i in abilities]
+        move_list = [i[0].title() for i in moves] + ['']
+        iv_range = [str(i) for i in range(32)]
+        for row in ntcForm.csv.data.splitlines():
+            t_species, gender, nature, ability, iv_hp, iv_atk, iv_def, iv_spa, iv_spd, iv_spe, egg1, egg2, egg3, egg4 = row.split(',')
+            t_ivs = [iv_hp, iv_atk, iv_def, iv_spa, iv_spd, iv_spe]
+            t_moves = [egg1, egg2, egg3, egg4]
+            if t_species.title() not in species_list:
+                flash('{} is not a valid species name'.format(t_species), 'error')
+            elif gender.title() not in ['Male', 'Female', 'None']:
+                flash('Please choose Male, Female or None as the gender', 'error')
+            elif nature.title() not in nature_list:
+                flash('{} is not a valid nature'.format(nature), 'error')
+            elif ability.title() not in ability_list:
+                flash('{} is not a valid ability name'.format(ability), 'error')
+            elif len(filter(lambda x: x not in iv_range and x != '?', t_ivs)) > 0:
+                flash('Please choose IVs between 0 and 31, or ?', 'error')
+            elif len(filter(lambda x: x.title() not in move_list, t_moves)) > 0:
+                print t_moves
+                for move in filter(lambda x: x.title() not in move_list, t_moves):
+                    flash('{} is not a valid move'.format(move), 'error')
+            else:
+                trade = Trade(
+                    owner=g.user,
+                    dex_no=species_list.index(t_species) + 1,
+                    species=t_species.title(),
+                    male=True,
+                    female=False,
+                    nature=nature.title(),
+                    ability=ability.title(),
+                    iv_hp=iv_hp,
+                    iv_atk=iv_atk,
+                    iv_def=iv_def,
+                    iv_spa=iv_spa,
+                    iv_spd=iv_spd,
+                    iv_spe=iv_spe,
+                    move1=egg1.title(),
+                    move2=egg2.title(),
+                    move3=egg3.title(),
+                    move4=egg4.title()
+                )
+                db.session.add(trade)
+    else:
+        flash('Form did not validate', 'error')
+    db.session.commit()
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
