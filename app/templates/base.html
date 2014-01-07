@@ -7,17 +7,18 @@
 	<title>XYTDB - A searchable database for Pokemon X and Y trades</title>
 	{% endif %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}" media="screen">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/ionicons.min.css') }}" media="screen">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/extra.css') }}" media="screen">
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
-	<script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.0/moment.min.js"></script>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<!-- Bootstrap javascript -->
-	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-	<link href="{{ url_for('static', filename='css/toastr.min.css') }}" rel="stylesheet"/>
-	<script src="{{ url_for('static', filename='js/toastr.min.js') }}"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.min.css">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.min.js"></script>
 	<script src="{{ url_for('static', filename='js/extra.js') }}"></script>
 </head>
 <body>
