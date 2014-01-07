@@ -55,3 +55,7 @@ class NewTradeForm(Form):
     iv_spe = SelectField('iv_spe', choices=iv_tup, default=31)
     moves = SelectMultipleField('moves', choices=moves, default=1)
     trade_id = HiddenField('trade_id')
+
+
+class NewTradeCsvForm(Form):
+    csv = TextAreaField('csv')
