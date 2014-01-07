@@ -16,6 +16,12 @@ function toggleAboutEdit()
 	$("#userInfoEdit").toggle()
 }
 
+function tradeFormToggle()
+{
+	$("#addTradeForm").toggle()
+	$("#addTradeCsvForm").toggle()
+}
+
 toastr.options = {
 			"closeButton": true,
 			"debug": false,

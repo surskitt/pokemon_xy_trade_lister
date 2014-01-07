@@ -73,16 +73,26 @@
 				<button type="submit" class="btn btn-success btn-block">Add</button>
 			</div>
 		</div>
+		<div class="row">
+			<div class="text-center">
+				<a href="javascript:tradeFormToggle()">Import csv</a>
+			</div>
+		</div>
 	</form>
 	<form method="post" name="new_trade_csv" role="form" action="#FORM_ACTION#" id="addTradeCsvForm" style="display: none">
 		<div class="row">
 			<div class="form-group col-md-12">
-				{{ tacForm.csv(class_="form-control", rows = 15) }}
+				{{ tacForm.csv(class_="form-control", rows = 15, placeholder="Species, Gender, Nature, Ability, HP IV, Attack IV, Defence IV, Special Attack IV, Special defence IV, Speed IV, Egg move 1, Egg move 2, Egg move 3, Egg move 4") }}
 			</div>
-			<div class="form-group col-md-12">
+		</div>
+		<div class="form-group col-md-12">
 				<div class="col-md-offset-4 col-md-4">
 					<button type="submit" class="btn btn-success btn-block">Add</button>
 				</div>
+			</div>
+		<div class="row">
+			<div class="text-center">
+				<a href="javascript:tradeFormToggle()">Cancel</a>
 			</div>
 		</div>
 	</form>
