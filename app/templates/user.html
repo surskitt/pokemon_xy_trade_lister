@@ -44,14 +44,14 @@
 			<div class="row"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}"></div>
 			{% if user.id == g.user.id %}
 			<div class="row" style="padding-top: 10px">
-				<a href="{{url_for('toggleMale', id=trade.id)}}">♂</a>
-				<a href="{{url_for('toggleFemale', id=trade.id)}}">♀</a>
+				<a href="{{url_for('toggleMale', id=trade.id)}}"><span class="ion-male"></span></a>
+				<a href="{{url_for('toggleFemale', id=trade.id)}}"><span class="ion-female"></span></a>
 				<a href="{{url_for('delete', id=trade.id)}}"><span class="glyphicon glyphicon-trash"></span></a>
 			</div>
 			{% endif %}
 		</div>
 		<div class="col-md-6">
-			<div class="row"><strong>{{ trade.species }}</strong>{% if trade.male|string == 'True' %} ♂{% endif %}{% if trade.female|string == 'True' %} ♀{% endif %}</div>
+			<div class="row"><strong>{{ trade.species }}</strong>{% if trade.male|string == 'True' %} <span class="ion-male"></span>{% endif %}{% if trade.female|string == 'True' %} <span class="ion-female"></span>{% endif %}</div>
 			<div class="row">{{ trade.nature }}</div>
 			<div class="row">{{ trade.ability }}</div>
 			<div class="row">{{ trade.iv_hp }}/{{trade.iv_atk}}/{{trade.iv_def}}/{{trade.iv_spa}}/{{trade.iv_spd}}/{{trade.iv_spe}}</div>
