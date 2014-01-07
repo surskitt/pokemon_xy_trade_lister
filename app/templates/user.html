@@ -44,7 +44,8 @@
 			<div class="row"><img src="{{ url_for('static', filename='img/pkm_images/{}.png'.format((trade.dex_no|string()).zfill(3))) }}" alt="{{ trade.species}}"></div>
 			{% if user.id == g.user.id %}
 			<div class="row" style="padding-top: 10px">
-				<span class="glyphicon glyphicon-pencil"></span>
+				<a href="{{url_for('toggleMale', id=trade.id)}}">♂</a>
+				<a href="{{url_for('toggleFemale', id=trade.id)}}">♀</a>
 				<a href="{{url_for('delete', id=trade.id)}}"><span class="glyphicon glyphicon-trash"></span></a>
 			</div>
 			{% endif %}

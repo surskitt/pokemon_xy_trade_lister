@@ -30,17 +30,3 @@ toastr.options = {
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
 		}
-
-function openEditForm(editAction, tradejson)
-{
-	$('#inputTradeId').val(tradeId)
-	$('#addTradeForm').attr('action', editAction)
-	$('#newTradeModal').modal('show')
-}
-
-function openAddForm(addAction)
-{
-	$('#inputTradeId').value(0)
-	$('#addTradeForm').attr('action', addAction)
-	$('#newTradeModal').modal()
-}
