@@ -1,6 +1,6 @@
 from flask import flash
 from flask.ext.wtf import Form
-from wtforms import TextField, TextAreaField, SelectField, SelectMultipleField, BooleanField, HiddenField
+from wtforms import TextField, TextAreaField, SelectField, SelectMultipleField, BooleanField
 from wtforms.validators import Required, Length
 from models import User
 from forms_selectors import national_dex, natures, abilities, moves
