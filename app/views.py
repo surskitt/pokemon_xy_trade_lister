@@ -144,9 +144,14 @@ def new_trade():
     ntForm = NewTradeForm()
     if ntForm.validate_on_submit():
         trade = Trade(owner=g.user, data=ntForm.data)
-        db.session.add(trade)
-        db.session.commit()
-        flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
+        td = trade.__dict__.copy()
+        del td['_sa_instance_state']
+        if Trade.query.filter_by(**td).first() is None:
+            db.session.add(trade)
+            db.session.commit()
+            flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
+        else:
+            flash('You have already added this trade', 'error')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
@@ -179,9 +184,17 @@ def new_trade_csv():
                 'move4': t_moves[3]
             }
             trade = Trade(owner=g.user, data=data)
-            db.session.add(trade)
-            flash('Your {} has been successfully added'.format(split[0]), 'success')
-    db.session.commit()
+            td = trade.__dict__.copy()
+            del td['_sa_instance_state']
+            if Trade.query.filter_by(**td).first() is None:
+                db.session.add(trade)
+                db.session.commit()
+                flash('Your {} was successfully added'.format(split[0]), 'success')
+            else:
+                flash('You have already added this trade', 'error')
+            # db.session.add(trade)
+            # flash('Your {} has been successfully added'.format(split[0]), 'success')
+    # db.session.commit()
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
