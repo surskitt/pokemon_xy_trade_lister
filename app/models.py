@@ -90,7 +90,6 @@ class Trade(db.Model):
         return '<Post %r: %r>' % (self.owner.nickname, self.species)
 
     def __init__(self, owner, data):
-
         if 'moves' in data:
             for i in range(4 - len(data['moves'])):
                 data['moves'].append(None)

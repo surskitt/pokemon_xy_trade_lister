@@ -154,59 +154,33 @@ def new_trade():
 def new_trade_csv():
     ntcForm = NewTradeCsvForm()
     if ntcForm.validate_on_submit():
-        species_list = [i[0].split(',')[1].title() for i in national_dex]
-        nature_list = [i[0].title() for i in natures]
-        ability_list = [i[0].title() for i in abilities]
-        move_list = [i[0].title() for i in moves]
-        iv_range = [str(i) for i in range(32)]
         for row in ntcForm.csv.data.splitlines():
-            if len(row.split(',')) >= 11:
-                t_species, male, female, nature, ability = [i.title() for i in row.split(',')[:5]]
-                t_ivs = [i.title() for i in row.split(',')[5:11]]
-                t_moves = [i.title() for i in row.split(',')[11:] if i != '']
-                if t_species not in species_list:
-                    flash('{} is not a valid species name'.format(t_species), 'error')
-                elif male not in ['True', 'False']:
-                    flash('Please choose True or False for the male value', 'error')
-                elif female not in ['True', 'False']:
-                    flash('Please choose True or False for the female value' 'error')
-                elif nature not in nature_list:
-                    flash('{} is not a valid nature'.format(nature), 'error')
-                elif ability not in ability_list:
-                    flash('{} is not a valid ability name'.format(ability), 'error')
-                elif len(filter(lambda x: x not in iv_range and x != '?', t_ivs)) > 0:
-                    flash('Please choose IVs between 0 and 31, or ?', 'error')
-                elif len(filter(lambda x: x not in move_list, t_moves)) > 0:
-                    for move in filter(lambda x: x not in move_list, t_moves):
-                        flash('{} is not a valid move'.format(move), 'error')
-                else:
-                    for i in range(4 - len(t_moves)):
-                        t_moves.append(None)
-                    trade = Trade(
-                        owner=g.user,
-                        dex_no=species_list.index(t_species) + 1,
-                        species=t_species,
-                        male=bool(male),
-                        female=bool(female),
-                        nature=nature,
-                        ability=ability,
-                        iv_hp=t_ivs[0],
-                        iv_atk=t_ivs[1],
-                        iv_def=t_ivs[2],
-                        iv_spa=t_ivs[3],
-                        iv_spd=t_ivs[4],
-                        iv_spe=t_ivs[5],
-                        move1=t_moves[0],
-                        move2=t_moves[1],
-                        move3=t_moves[2],
-                        move4=t_moves[3]
-                    )
-                    db.session.add(trade)
-                    flash('Your {} was successfully imported'.format(t_species), 'success')
-            else:
-                flash('Please provide a valid format csv', 'error')
-    else:
-        flash('Form did not validate', 'error')
+            split = [i.title() for i in row.split(',')]
+            t_moves = split[11:]
+            for i in range(4 - len(t_moves)):
+                t_moves.append(None)
+            species_list = [i[0].split(',')[1].title() for i in national_dex]
+            data = {
+                'dex_no': species_list.index(split[0]) + 1,
+                'species': split[0],
+                'male': split[1] == 'True',
+                'female': split[2] == 'True',
+                'nature': split[3],
+                'ability': split[4],
+                'iv_hp': split[5],
+                'iv_atk': split[6],
+                'iv_def': split[7],
+                'iv_spa': split[8],
+                'iv_spd': split[9],
+                'iv_spe': split[10],
+                'move1': t_moves[0],
+                'move2': t_moves[1],
+                'move3': t_moves[2],
+                'move4': t_moves[3]
+            }
+            trade = Trade(owner=g.user, data=data)
+            db.session.add(trade)
+            flash('Your {} has been successfully added'.format(split[0]), 'success')
     db.session.commit()
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
