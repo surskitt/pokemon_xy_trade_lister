@@ -141,39 +141,12 @@ def after_login(resp):
 
 @app.route('/new_trade', methods=['GET', 'POST'])
 def new_trade():
-    def index_or_none(l, i):
-        if len(l) >= i + 1:
-            return l[i]
-        else:
-            return None
-
     ntForm = NewTradeForm()
     if ntForm.validate_on_submit():
-        trade = Trade(
-            owner=g.user,
-            dex_no=ntForm.species.data.split(',')[0],
-            species=ntForm.species.data.split(',')[1],
-            # gender=ntForm.gender.data,
-            # count=ntForm.count.data,
-            male=ntForm.male.data,
-            female=ntForm.female.data,
-            nature=ntForm.nature.data,
-            ability=ntForm.ability.data,
-            iv_hp=ntForm.iv_hp.data,
-            iv_atk=ntForm.iv_atk.data,
-            iv_def=ntForm.iv_def.data,
-            iv_spa=ntForm.iv_spa.data,
-            iv_spd=ntForm.iv_spd.data,
-            iv_spe=ntForm.iv_spe.data,
-            move1=index_or_none(ntForm.moves.data, 0),
-            move2=index_or_none(ntForm.moves.data, 1),
-            move3=index_or_none(ntForm.moves.data, 2),
-            move4=index_or_none(ntForm.moves.data, 3)
-        )
+        trade = Trade(owner=g.user, data=ntForm.data)
         db.session.add(trade)
         db.session.commit()
-        flash('Your {} was successfully added'.format(
-            ntForm.species.data.split(',')[1]), 'success')
+        flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 

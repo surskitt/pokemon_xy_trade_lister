@@ -89,4 +89,22 @@ class Trade(db.Model):
     def __repr__(self):
         return '<Post %r: %r>' % (self.owner.nickname, self.species)
 
+    def __init__(self, owner, data):
+
+        if 'moves' in data:
+            for i in range(4 - len(data['moves'])):
+                data['moves'].append(None)
+        if 'dex_no' not in data:
+            data['dex_no'] = data['species'].split(',')[0]
+            data['species'] = data['species'].split(',')[1]
+        if 'move1' not in data:
+            data['move1'] = data['moves'][0]
+            data['move2'] = data['moves'][1]
+            data['move3'] = data['moves'][2]
+            data['move4'] = data['moves'][3]
+        if 'moves' in data:
+            del data['moves']
+
+        super(Trade, self).__init__(owner=owner, **data)
+
 whooshalchemy.whoosh_index(app, Trade)

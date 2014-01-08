@@ -54,7 +54,6 @@ class NewTradeForm(Form):
     iv_spd = SelectField('iv_spd', choices=iv_tup, default=31)
     iv_spe = SelectField('iv_spe', choices=iv_tup, default=31)
     moves = SelectMultipleField('moves', choices=moves, default=1)
-    trade_id = HiddenField('trade_id')
 
 
 class NewTradeCsvForm(Form):
