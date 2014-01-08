@@ -213,8 +213,8 @@ def new_trade_csv():
                         owner=g.user,
                         dex_no=species_list.index(t_species) + 1,
                         species=t_species,
-                        male=True,
-                        female=False,
+                        male=bool(male),
+                        female=bool(female),
                         nature=nature,
                         ability=ability,
                         iv_hp=t_ivs[0],
@@ -229,7 +229,7 @@ def new_trade_csv():
                         move4=t_moves[3]
                     )
                     db.session.add(trade)
-                    flash('Your trades were successfully imported', 'success')
+                    flash('Your {} was successfully imported'.format(t_species), 'success')
             else:
                 flash('Please provide a valid format csv', 'error')
     else:
