@@ -192,9 +192,6 @@ def new_trade_csv():
                 flash('Your {} was successfully added'.format(split[0]), 'success')
             else:
                 flash('You have already added this trade', 'error')
-            # db.session.add(trade)
-            # flash('Your {} has been successfully added'.format(split[0]), 'success')
-    # db.session.commit()
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
 
 
