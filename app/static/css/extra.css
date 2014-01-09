@@ -43,3 +43,7 @@ body { padding-top: 5px; }
 #aboutMe img {
 	max-height: 30px;
 }
+
+.navbar-nav.navbar-right:last-child {
+	margin-right: 0!important;
+}
