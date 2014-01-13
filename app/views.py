@@ -7,6 +7,12 @@ from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
 from flask.ext.sqlalchemy import get_debug_queries
 from forms_selectors import national_dex, natures, abilities, moves
+import twitter
+
+api = twitter.Api(consumer_key='AByrEUjjlp0jclWkh18doQ',
+                  consumer_secret='8oVhPrEIcjHPVWpwqg8LRIUSuTs9Gfm5Ahe6uXUVAco',
+                  access_token_key='2288848790-y1bhhKlStkAKYOR6qFK6giAJRYKJWNnGoTREQGZ',
+                  access_token_secret='T0QSoBGhQi4V1alERC8W9POaZSqFyNWdNTKoGQn4PBDWm')
 
 
 @app.before_request
@@ -150,6 +156,15 @@ def new_trade():
             db.session.add(trade)
             db.session.commit()
             flash('Your {} was successfully added'.format(ntForm.species.data.split(',')[1]), 'success')
+            status = '{0} just added a {1} {2} {3} ({4}) {5}'.format(
+                g.user.nickname,
+                trade.nature,
+                trade.ability,
+                trade.species,
+                trade.ivSpread(),
+                url_for('user', nickname=g.user.nickname, _external=True)
+            )
+            api.PostUpdate(status)
         else:
             flash('You have already added this trade', 'error')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))

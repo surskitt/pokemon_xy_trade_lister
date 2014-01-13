@@ -79,6 +79,7 @@ class Trade(db.Model):
             self.iv_spd,
             self.iv_spe
         ]
+        ivs = [str(i) for i in ivs]
         return "/".join(ivs)
 
     def toJson(self):
