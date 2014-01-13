@@ -205,6 +205,15 @@ def new_trade_csv():
                 db.session.add(trade)
                 db.session.commit()
                 flash('Your {} was successfully added'.format(split[0]), 'success')
+                status = '{0} just added a {1} {2} {3} ({4}) {5}'.format(
+                    g.user.nickname,
+                    trade.nature,
+                    trade.ability,
+                    trade.species,
+                    trade.ivSpread(),
+                    url_for('user', nickname=g.user.nickname, _external=True)
+                )
+                api.PostUpdate(status)
             else:
                 flash('You have already added this trade', 'error')
     return redirect(request.args.get('next') or url_for('user', nickname=g.user.nickname))
