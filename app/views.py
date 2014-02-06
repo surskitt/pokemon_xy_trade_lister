@@ -6,7 +6,7 @@ from models import User, Trade, ROLE_USER
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS, DATABASE_QUERY_TIMEOUT
 from flask.ext.sqlalchemy import get_debug_queries
-from forms_selectors import national_dex, natures, abilities, moves
+from forms_selectors import national_dex
 import twitter
 
 api = twitter.Api(consumer_key='AByrEUjjlp0jclWkh18doQ',
