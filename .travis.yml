@@ -5,4 +5,11 @@ python:
   - "3.2"
   - "3.3"
   - "pypy"
+<<<<<<< HEAD
 install: "pip install -r requirements.txt"
+=======
+# command to install dependencies
+install:
+  - "pip install ."
+  - "pip install -r requirements.txt"
+>>>>>>> 0caab1ef97e28e4f493d7e6ddb1d66dce6b72316
