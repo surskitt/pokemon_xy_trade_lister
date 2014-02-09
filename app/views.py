@@ -108,7 +108,7 @@ def profile_edit():
 
 
 @app.errorhandler(404)
-def internal_error_404(error):
+def internal_error(error):
     lForm = LoginForm()
     return render_template('404.html',
                            lForm=lForm,
@@ -116,7 +116,7 @@ def internal_error_404(error):
 
 
 @app.errorhandler(500)
-def internal_error_500(error):
+def internal_error(error):
     db.session.rollback()
     lForm = LoginForm()
     return render_template('500.html',
